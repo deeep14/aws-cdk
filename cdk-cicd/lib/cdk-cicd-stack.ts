@@ -15,6 +15,7 @@ export class CdkCicdStack extends cdk.Stack {
           'ls -la',
           'ls -la cdk.out'
         ],
+        primaryOutputDirectory: 'cdk.out'
       })
     })
   }
