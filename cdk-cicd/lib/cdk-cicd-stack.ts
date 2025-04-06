@@ -10,7 +10,7 @@ export class CdkCicdStack extends cdk.Stack {
       synth: new ShellStep('myShellStep', {
         input: CodePipelineSource.gitHub('deeep14/aws-cdk', 'cdk-cicd'),
         commands: [
-          'cd cdk-cicd',
+          'cd /Users/deepakmasuti/aws-cdk/cdk-cicd',
           'npm ci',
           'npx cdk synth'
         ],
