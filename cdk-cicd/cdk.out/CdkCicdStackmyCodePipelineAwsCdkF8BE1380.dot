@@ -1,0 +1,37 @@
+digraph G {
+  # Arrows represent an "unlocks" relationship (opposite of dependency). So chosen
+  # because the layout looks more natural that way.
+  # To represent subgraph dependencies, subgraphs are represented by BEGIN/END nodes.
+  # To render: `dot -Tsvg CdkCicdStackmyCodePipelineAwsCdkF8BE1380.dot > graph.svg`, open in a browser.
+  node [shape="box"];
+"BEGIN Build" [shape="cds", style="filled", fillcolor="#b7deff"];
+"END Build" [shape="cds", style="filled", fillcolor="#b7deff"];
+"Build.myShellStep";
+"Source.deeep14/aws-cdk" -> "Build.myShellStep";
+"BEGIN Build" -> "Build.myShellStep";
+"Build.myShellStep" -> "END Build";
+"BEGIN UpdatePipeline" [shape="cds", style="filled", fillcolor="#b7deff"];
+"END UpdatePipeline" [shape="cds", style="filled", fillcolor="#b7deff"];
+"UpdatePipeline.SelfMutate";
+"Build.myShellStep" -> "UpdatePipeline.SelfMutate";
+"BEGIN UpdatePipeline" -> "UpdatePipeline.SelfMutate";
+"UpdatePipeline.SelfMutate" -> "END UpdatePipeline";
+"BEGIN TestStage" [shape="cds", style="filled", fillcolor="#b7deff"];
+"END TestStage" [shape="cds", style="filled", fillcolor="#b7deff"];
+"UpdatePipeline.SelfMutate" -> "BEGIN TestStage";
+"BEGIN TestStage.myNewLambdaStack010" [shape="cds", style="filled", fillcolor="#b7deff"];
+"END TestStage.myNewLambdaStack010" [shape="cds", style="filled", fillcolor="#b7deff"];
+"TestStage.myNewLambdaStack010.Deploy";
+"TestStage.myNewLambdaStack010.Prepare" -> "TestStage.myNewLambdaStack010.Deploy";
+"TestStage.myNewLambdaStack010.Prepare";
+"Build.myShellStep" -> "TestStage.myNewLambdaStack010.Prepare";
+"BEGIN TestStage.myNewLambdaStack010" -> "TestStage.myNewLambdaStack010.Prepare";
+"TestStage.myNewLambdaStack010.Deploy" -> "END TestStage.myNewLambdaStack010";
+"BEGIN TestStage" -> "BEGIN TestStage.myNewLambdaStack010";
+"END TestStage.myNewLambdaStack010" -> "END TestStage";
+"BEGIN Source" [shape="cds", style="filled", fillcolor="#b7deff"];
+"END Source" [shape="cds", style="filled", fillcolor="#b7deff"];
+"Source.deeep14/aws-cdk";
+"BEGIN Source" -> "Source.deeep14/aws-cdk";
+"Source.deeep14/aws-cdk" -> "END Source";
+}
