@@ -19,7 +19,7 @@ export class CdkCicdStack extends cdk.Stack {
           'npm ci',
           'npx cdk synth'
         ],
-        primaryOutputDirectory: 'cdk-cicd/cdk.out'
+        primaryOutputDirectory: 'cdk.out'
       })
     })
     pipeline.addStage(new PipelineStage(this, 'TestStage', {
