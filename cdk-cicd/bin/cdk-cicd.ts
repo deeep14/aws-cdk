@@ -4,5 +4,7 @@ import { CdkCicdStack } from '../lib/cdk-cicd-stack';
 
 const app = new cdk.App();
 new CdkCicdStack(app, 'CdkCicdStack', {
-  LambdaStackStageName: 'dev'
+  LambdaStackName: 'myLambdaStack',
+  LambdaStackStageName: 'dev',
+  EC2stackName: 'myEc2Stack',
 });

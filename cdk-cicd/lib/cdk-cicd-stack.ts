@@ -4,7 +4,9 @@ import { Construct } from 'constructs';
 import { PipelineStage } from './pipeline-stage';
 
 interface pipelineProps extends cdk.StackProps{
+  LambdaStackName: string;
   LambdaStackStageName: string;
+  EC2stackName: string;
 }
 
 export class CdkCicdStack extends cdk.Stack {
@@ -25,7 +27,9 @@ export class CdkCicdStack extends cdk.Stack {
       })
     })
     pipeline.addStage(new PipelineStage(this, 'TestStage', {
-      LambdaStackStageName: props.LambdaStackStageName
+      LambdaStackName: props.LambdaStackName,
+      LambdaStackStageName: props.LambdaStackStageName,
+      EC2stackName: props.EC2stackName,
     }))
   }
 }
