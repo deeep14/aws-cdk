@@ -12,9 +12,9 @@ export class LambdaStack extends Stack{
         super(scope, id, props);
        
         const test_lambda = new lambda.Function(this, 'myLambdaFunction101', {
-            handler: 'test_function',
+            handler: 'test_function.handler',
             runtime: lambda.Runtime.PYTHON_3_9,
-            code: lambda.Code.fromAsset('src/lambda/test_function.py'),
+            code: lambda.Code.fromAsset('src/lambda'),
         });
     }
 }
