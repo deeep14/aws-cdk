@@ -30,6 +30,10 @@ export class CdkCicdStack extends cdk.Stack {
       LambdaStackName: props.LambdaStackName,
       LambdaStackStageName: props.LambdaStackStageName,
       EC2stackName: props.EC2stackName,
+      env: {
+        account: cdk.Stack.of(this).account,
+        region: cdk.Stack.of(this).region
+      }
     }))
   }
 }

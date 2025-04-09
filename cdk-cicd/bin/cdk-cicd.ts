@@ -7,4 +7,8 @@ new CdkCicdStack(app, 'CdkCicdStack', {
   LambdaStackName: 'myLambdaStack',
   LambdaStackStageName: 'dev',
   EC2stackName: 'myEc2Stack',
+  env: {
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+    region: process.env.CDK_DEFAULT_REGION
+  }
 });

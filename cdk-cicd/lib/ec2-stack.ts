@@ -26,7 +26,7 @@ export class Ec2InstanceCdkStack extends cdk.Stack {
 
     new ec2.Instance(this, 'PrivateEC2', {
       vpc,
-      vpcSubnets: { subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS },
+      vpcSubnets: { subnetType: ec2.SubnetType.PUBLIC },
       instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
       machineImage: ec2.MachineImage.latestAmazonLinux(),
       securityGroup: sg,
