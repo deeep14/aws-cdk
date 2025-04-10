@@ -7,8 +7,8 @@ export class Ec2InstanceCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const vpc = ec2.Vpc.fromLookup(this, 'DefaultVPC', {
-      isDefault: true
+    const vpc = ec2.Vpc.fromLookup(this, 'myVPC', {
+        vpcId: 'vpc-033a8a5e822d62f3f'
     });
 
     const sg = new ec2.SecurityGroup(this, 'InstanceSG', {
@@ -26,7 +26,7 @@ export class Ec2InstanceCdkStack extends cdk.Stack {
 
     new ec2.Instance(this, 'PrivateEC2', {
       vpc,
-      vpcSubnets: { subnetType: ec2.SubnetType.PUBLIC },
+      vpcSubnets: { subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS },
       instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
       machineImage: ec2.MachineImage.latestAmazonLinux(),
       securityGroup: sg,
