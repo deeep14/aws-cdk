@@ -12,8 +12,8 @@ export class ScriptUploadStack extends cdk.Stack {
 
     const instanceId = props.instanceId;
     const scriptContent = `#!/bin/bash
-echo "Hello from CDK script!" > /home/ec2-user/hello.txt
-chmod +x /home/ec2-user/hello.txt
+echo "Hello from CDK script!" > /home/ec2-user/hello.sh
+chmod +x /home/ec2-user/hello.sh
 `;
 
     new ssm.CfnAssociation(this, 'UploadScriptAssociation', {
