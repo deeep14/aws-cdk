@@ -3,12 +3,16 @@ import { Construct } from 'constructs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as iam from 'aws-cdk-lib/aws-iam';
 
+interface ec2StackProps extends cdk.StackProps {
+    vpcId: string;
+}
+
 export class Ec2InstanceCdkStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props: ec2StackProps) {
     super(scope, id, props);
 
     const vpc = ec2.Vpc.fromLookup(this, 'myVPC', {
-        vpcId: 'vpc-033a8a5e822d62f3f'
+        vpcId: props.vpcId
     });
 
     const sg = new ec2.SecurityGroup(this, 'InstanceSG', {

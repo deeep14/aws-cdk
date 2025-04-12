@@ -9,9 +9,11 @@ interface PipelineStageStackProps extends StackProps {
     LambdaStackStageName: string;
 
     EC2stackName: string;
+    vpcId: string;
 
     ScriptUploadStack: string;
     instanceId: string;
+    scriptPath: string;
 }
 
 export class PipelineStage extends Stage{
@@ -21,10 +23,12 @@ export class PipelineStage extends Stage{
             stageName: props.LambdaStackStageName
         })
         new Ec2InstanceCdkStack(this, props.EC2stackName, {
-            env: props.env
+            env: props.env,
+            vpcId: props.vpcId
         })
         new ScriptUploadStack(this, props.ScriptUploadStack, {
-            instanceId: props.instanceId
+            instanceId: props.instanceId,
+            scriptPath: props.scriptPath
         })
     }
 }

@@ -4,6 +4,7 @@ import * as ssm from 'aws-cdk-lib/aws-ssm';
 
 interface uploadScriptProps extends cdk.StackProps {
     instanceId: string;
+    scriptPath: string;
 }
 
 export class ScriptUploadStack extends cdk.Stack {
@@ -11,10 +12,7 @@ export class ScriptUploadStack extends cdk.Stack {
     super(scope, id, props);
 
     const instanceId = props.instanceId;
-    const scriptContent = `#!/bin/bash
-echo "Hello from CDK script!" > /home/ec2-user/hello.sh
-chmod +x /home/ec2-user/hello.sh
-`;
+    const scriptContent = props.scriptPath;
 
     new ssm.CfnAssociation(this, 'UploadScriptAssociation', {
       name: 'AWS-RunShellScript',
