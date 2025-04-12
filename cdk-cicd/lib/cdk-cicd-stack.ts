@@ -7,6 +7,8 @@ interface pipelineProps extends cdk.StackProps{
   LambdaStackName: string;
   LambdaStackStageName: string;
   EC2stackName: string;
+  instanceId: string;
+  ScriptUploadStack: string;
 }
 
 export class CdkCicdStack extends cdk.Stack {
@@ -33,7 +35,9 @@ export class CdkCicdStack extends cdk.Stack {
       env: {
         account: cdk.Stack.of(this).account,
         region: cdk.Stack.of(this).region
-      }
+      },
+      instanceId: props.instanceId,
+      ScriptUploadStack: props.ScriptUploadStack,
     }))
   }
 }
