@@ -11,6 +11,9 @@ interface pipelineProps extends cdk.StackProps{
   instanceId: string;
   ScriptUploadStack: string;
   scriptPath: string;
+  BucketLogicalId: string;
+  BucketName: string;
+  UploadToS3Stack: string;
 }
 
 export class CdkCicdStack extends cdk.Stack {
@@ -42,6 +45,9 @@ export class CdkCicdStack extends cdk.Stack {
       instanceId: props.instanceId,
       ScriptUploadStack: props.ScriptUploadStack,
       scriptPath: props.scriptPath,
+      UploadToS3Stack: props.UploadToS3Stack,
+      BucketLogicalId: props.BucketLogicalId,
+      BucketName: props.BucketName
     }))
   }
 }

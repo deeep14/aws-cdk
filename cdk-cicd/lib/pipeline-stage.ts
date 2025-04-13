@@ -3,6 +3,7 @@ import { Construct } from "constructs";
 import { LambdaStack } from "./lambda-stack";
 import { Ec2InstanceCdkStack } from "./ec2-stack";
 import { ScriptUploadStack } from "./upload-script-to-ec2";
+import { UploadToS3Stack } from "./upload-files-to-s3";
 
 interface PipelineStageStackProps extends StackProps {
     LambdaStackName: string;
@@ -14,6 +15,10 @@ interface PipelineStageStackProps extends StackProps {
     ScriptUploadStack: string;
     instanceId: string;
     scriptPath: string;
+
+    UploadToS3Stack: string;
+    BucketLogicalId: string;
+    BucketName:string;
 }
 
 export class PipelineStage extends Stage{
@@ -29,6 +34,10 @@ export class PipelineStage extends Stage{
         new ScriptUploadStack(this, props.ScriptUploadStack, {
             instanceId: props.instanceId,
             scriptPath: props.scriptPath
+        })
+        new UploadToS3Stack(this, props.UploadToS3Stack, {
+            BucketLogicalId: props.BucketLogicalId,
+            BucketName: props.BucketName
         })
     }
 }
