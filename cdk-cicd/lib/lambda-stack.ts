@@ -11,11 +11,13 @@ export class LambdaStack extends Stack{
     public readonly test_lambda;
     constructor(scope: Construct, id: string, props?: LambdaStackProps){
         super(scope, id, props);
-       
+        
         this.test_lambda = new lambda.Function(this, 'myLambdaFunction101', {
             handler: 'test_function.handler',
+            functionName: 'cdk-test-lambda',
             runtime: lambda.Runtime.PYTHON_3_9,
             code: lambda.Code.fromAsset('src/lambda'),
         });
+        
     }
 }
