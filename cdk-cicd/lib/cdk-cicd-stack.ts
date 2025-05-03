@@ -14,6 +14,9 @@ interface pipelineProps extends cdk.StackProps{
   BucketLogicalId: string;
   BucketName: string;
   UploadToS3Stack: string;
+  importBucketStack: string;
+  bucketArn: string;
+  lambdaTriggerStack: string;
 }
 
 export class CdkCicdStack extends cdk.Stack {
@@ -47,7 +50,10 @@ export class CdkCicdStack extends cdk.Stack {
       scriptPath: props.scriptPath,
       UploadToS3Stack: props.UploadToS3Stack,
       BucketLogicalId: props.BucketLogicalId,
-      BucketName: props.BucketName
+      BucketName: props.BucketName,
+      importBucketStack: props.importBucketStack,
+      bucketArn: props.bucketArn,
+      lambdaTriggerStack: props.lambdaTriggerStack,
     }))
   }
 }

@@ -4,6 +4,8 @@ import { LambdaStack } from "./lambda-stack";
 import { Ec2InstanceCdkStack } from "./ec2-stack";
 import { ScriptUploadStack } from "./upload-script-to-ec2";
 import { UploadToS3Stack } from "./upload-files-to-s3";
+import { ImportBucketStack } from "./imports3stack";
+import { LambdaTriggerStack } from "./addS3Trigger";
 
 interface PipelineStageStackProps extends StackProps {
     LambdaStackName: string;
@@ -19,12 +21,17 @@ interface PipelineStageStackProps extends StackProps {
     UploadToS3Stack: string;
     BucketLogicalId: string;
     BucketName:string;
+
+    importBucketStack: string;
+    bucketArn: string;
+
+    lambdaTriggerStack: string;
 }
 
 export class PipelineStage extends Stage{
     constructor(scope: Construct, id: string, props: PipelineStageStackProps){
         super(scope, id, props);
-        new LambdaStack(this, props.LambdaStackName, {
+        const lambdaInstace = new LambdaStack(this, props.LambdaStackName, {
             stageName: props.LambdaStackStageName
         })
         new Ec2InstanceCdkStack(this, props.EC2stackName, {
@@ -38,6 +45,14 @@ export class PipelineStage extends Stage{
         new UploadToS3Stack(this, props.UploadToS3Stack, {
             BucketLogicalId: props.BucketLogicalId,
             BucketName: props.BucketName
+        })
+        const importedBucketInstance = new ImportBucketStack(this, props.importBucketStack, {
+            bucketArn: props.bucketArn,
+            importBucketStack: props.importBucketStack
+        })
+        new LambdaTriggerStack(this, props.lambdaTriggerStack, {
+            bucket: importedBucketInstance.importedBucket,
+            lambdaFunc: lambdaInstace.test_lambda
         })
     }
 }

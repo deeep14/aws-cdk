@@ -17,5 +17,8 @@ new CdkCicdStack(app, 'CdkCicdStack', {
   scriptPath: '../script/myscript.sh',
   UploadToS3Stack: 'MyS3BucketUploadStack01',
   BucketLogicalId: 'MyS3UploadBucket',
-  BucketName: 'snowflake-test-s3'
+  BucketName: 'snowflake-test-s3',
+  importBucketStack: 'importexistingbucket',
+  bucketArn: 'arn:aws:s3:::snowflake-test-s3',
+  lambdaTriggerStack: 'myLambdaAndS3TriggerStack'
 });
