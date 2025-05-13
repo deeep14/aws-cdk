@@ -17,13 +17,15 @@ interface pipelineProps extends cdk.StackProps{
   importBucketStack: string;
   bucketArn: string;
   lambdaTriggerStack: string;
+  lambdaName: string;
+  pipelineName: string;
 }
 
 export class CdkCicdStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: pipelineProps) {
     super(scope, id, props);
     const pipeline = new CodePipeline(this, 'myCodePipelineAwsCdk', {
-      pipelineName: 'cdk-code-pipeline',
+      pipelineName: props.pipelineName,
       synth: new ShellStep('myShellStep', {
         input: CodePipelineSource.gitHub('deeep14/aws-cdk', 'cdk-cicd'),
         commands: [
@@ -54,6 +56,7 @@ export class CdkCicdStack extends cdk.Stack {
       importBucketStack: props.importBucketStack,
       bucketArn: props.bucketArn,
       lambdaTriggerStack: props.lambdaTriggerStack,
+      lambdaName: props.lambdaName
     }))
   }
 }

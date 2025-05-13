@@ -4,6 +4,7 @@ import { CdkCicdStack } from '../lib/cdk-cicd-stack';
 
 const app = new cdk.App();
 new CdkCicdStack(app, 'CdkCicdStack', {
+  pipelineName: 'cdk-code-pipeline',
   LambdaStackName: 'myLambdaStack',
   LambdaStackStageName: 'dev',
   EC2stackName: 'myEc2Stack',
@@ -20,5 +21,28 @@ new CdkCicdStack(app, 'CdkCicdStack', {
   BucketName: 'snowflake-test-s3',
   importBucketStack: 'importexistingbucket',
   bucketArn: 'arn:aws:s3:::test-trigger-bucket0303',
-  lambdaTriggerStack: 'myLambdaAndS3TriggerStack'
+  lambdaTriggerStack: 'myLambdaAndS3TriggerStack',
+  lambdaName: 'cdk-test-lambda'
 });
+
+new CdkCicdStack(app, 'CdkCicdStackProd', {
+  pipelineName: 'cdk-code-pipeline-prod',
+  LambdaStackName: 'myLambdaStackProd',
+  LambdaStackStageName: 'prod',
+  EC2stackName: 'myEc2StackProd',
+  vpcId: 'vpc-033a8a5e822d62f3f',
+  env: {
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+    region: "us-east-2"
+  },
+  instanceId: 'i-07478e9518641587d',
+  ScriptUploadStack: 'ScriptUploadStackProd',
+  scriptPath: '../script/myscript.sh',
+  UploadToS3Stack: 'MyS3BucketUploadStack01Prod',
+  BucketLogicalId: 'MyS3UploadBucketProd',
+  BucketName: 'snowflake-test-s3-prod',
+  importBucketStack: 'importexistingbucketProd',
+  bucketArn: 'arn:aws:s3:::test-trigger-bucket0303',
+  lambdaTriggerStack: 'myLambdaAndS3TriggerStackProd',
+  lambdaName: 'cdk-test-lambda-prod'
+})

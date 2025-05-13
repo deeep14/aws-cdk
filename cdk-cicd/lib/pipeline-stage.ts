@@ -10,6 +10,7 @@ import { S3EventTriggerStack } from "./addS3Trigger";
 interface PipelineStageStackProps extends StackProps {
     LambdaStackName: string;
     LambdaStackStageName: string;
+    lambdaName: string;
 
     EC2stackName: string;
     vpcId: string;
@@ -32,7 +33,8 @@ export class PipelineStage extends Stage{
     constructor(scope: Construct, id: string, props: PipelineStageStackProps){
         super(scope, id, props);
         const lambdaInstace = new LambdaStack(this, props.LambdaStackName, {
-            stageName: props.LambdaStackStageName
+            stageName: props.LambdaStackStageName,
+            lambdaName: props.lambdaName
         })
         new Ec2InstanceCdkStack(this, props.EC2stackName, {
             env: props.env,
