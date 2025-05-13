@@ -10,7 +10,7 @@ new CdkCicdStack(app, 'CdkCicdStack', {
   vpcId: 'vpc-033a8a5e822d62f3f',
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
-    region: process.env.CDK_DEFAULT_REGION
+    region: "us-east-2"
   },
   instanceId: 'i-07478e9518641587d',
   ScriptUploadStack: 'ScriptUploadStack',
