@@ -35,7 +35,7 @@ new CdkCicdStack(app, 'CdkCicdStackProd', {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: "us-east-2"
   },
-  instanceId: 'i-07478e9518641587d',
+  instanceId: 'i-008ce0514947ac963',
   ScriptUploadStack: 'ScriptUploadStackProd',
   scriptPath: '../script/myscript.sh',
   UploadToS3Stack: 'MyS3BucketUploadStack01Prod',
