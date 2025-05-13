@@ -44,10 +44,10 @@ export class PipelineStage extends Stage{
             instanceId: props.instanceId,
             scriptPath: props.scriptPath
         })
-        new UploadToS3Stack(this, props.UploadToS3Stack, {
-            BucketLogicalId: props.BucketLogicalId,
-            BucketName: props.BucketName
-        })
+        // new UploadToS3Stack(this, props.UploadToS3Stack, {
+        //     BucketLogicalId: props.BucketLogicalId,
+        //     BucketName: props.BucketName
+        // })
         const importedBucketInstance = new ImportBucketStack(this, props.importBucketStack, {
             bucketArn: props.bucketArn,
             importBucketStack: props.importBucketStack
