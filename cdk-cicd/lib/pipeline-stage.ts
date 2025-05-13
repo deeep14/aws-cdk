@@ -5,7 +5,7 @@ import { Ec2InstanceCdkStack } from "./ec2-stack";
 import { ScriptUploadStack } from "./upload-script-to-ec2";
 import { UploadToS3Stack } from "./upload-files-to-s3";
 import { ImportBucketStack } from "./imports3stack";
-import { LambdaTriggerStack } from "./addS3Trigger";
+import { S3EventTriggerStack } from "./addS3Trigger";
 
 interface PipelineStageStackProps extends StackProps {
     LambdaStackName: string;
@@ -50,9 +50,9 @@ export class PipelineStage extends Stage{
             bucketArn: props.bucketArn,
             importBucketStack: props.importBucketStack
         })
-        new LambdaTriggerStack(this, props.lambdaTriggerStack, {
-            bucket: importedBucketInstance.importedBucket,
-            lambdaFunc: lambdaInstace.test_lambda
+        new S3EventTriggerStack(this, props.lambdaTriggerStack, {
+            existingBucketArn: importedBucketInstance.importedBucket.bucketArn,
+            lambdaFunction: lambdaInstace.test_lambda
         })
     }
 }
