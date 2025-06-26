@@ -7,6 +7,7 @@ import { UploadToS3Stack } from "./upload-files-to-s3";
 import { ImportBucketStack } from "./imports3stack";
 import { S3EventTriggerStack } from "./addS3Trigger";
 import { GlueJobStack } from "./glue-job";
+import { GlueNetworkConnectionStack } from "./glue-network-connection";
 
 interface PipelineStageStackProps extends StackProps {
     LambdaStackName: string;
@@ -58,5 +59,6 @@ export class PipelineStage extends Stage{
             lambdaFunction: lambdaInstace.test_lambda
         })
         new GlueJobStack(this, "GlueJobStack", {})
+        new GlueNetworkConnectionStack(this, "glueConOp", {})
     }
 }
