@@ -25,7 +25,8 @@ export class GlueJobStack extends Stack {
         actions: [
             "s3:PutObject",
             "s3:GetObject",
-        ]
+        ],
+        resources: ["*"]
     }))
 
     // (Optional) Add additional permissions to access S3 or other services
