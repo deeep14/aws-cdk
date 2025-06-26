@@ -23,7 +23,7 @@ new CdkCicdStack(app, 'CdkCicdStack', {
   bucketArn: 'arn:aws:s3:::test-trigger-bucket0303',
   lambdaTriggerStack: 'myLambdaAndS3TriggerStack',
   lambdaName: 'cdk-test-lambda',
-  stack_suffix: 'dev'
+  stack_suffix: ''
 });
 
 new CdkCicdStack(app, 'CdkCicdStackProd', {
@@ -46,5 +46,5 @@ new CdkCicdStack(app, 'CdkCicdStackProd', {
   bucketArn: 'arn:aws:s3:::test-trigger-bucket0303',
   lambdaTriggerStack: 'myLambdaAndS3TriggerStackProd',
   lambdaName: 'cdk-test-lambda-prod',
-  stack_suffix: 'prod'
+  stack_suffix: ''
 })
