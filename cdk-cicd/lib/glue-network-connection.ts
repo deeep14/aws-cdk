@@ -11,7 +11,6 @@ export class GlueNetworkConnectionStack extends Stack {
 
     const vpc = ec2.Vpc.fromVpcAttributes(this, 'ImportedVPC', {
       vpcId: 'vpc-0febf55b79e1dd54d',
-      privateSubnetIds: ["subnet-026abac84964064aa"],
       availabilityZones: ["us-east-2a"]
     });
 
@@ -21,8 +20,8 @@ export class GlueNetworkConnectionStack extends Stack {
         name: 'my-glue-vpc-connection',
         connectionType: 'NETWORK',
         physicalConnectionRequirements: {
-          availabilityZone: vpc.privateSubnets[0].availabilityZone,
-          subnetId: "subnet-026abac84964064aa",
+          availabilityZone: "use2-az2",
+          subnetId: "subnet-0b114bbc94005ee53",
           securityGroupIdList: ["sg-032f22cf6b66da3c3"]
         },
       },
