@@ -37,10 +37,10 @@ export class PipelineStage extends Stage{
             stageName: props.LambdaStackStageName,
             lambdaName: props.lambdaName
         })
-        new Ec2InstanceCdkStack(this, props.EC2stackName, {
-            env: props.env,
-            vpcId: props.vpcId
-        })
+        // new Ec2InstanceCdkStack(this, props.EC2stackName, {
+        //     env: props.env,
+        //     vpcId: props.vpcId
+        // })
         new ScriptUploadStack(this, props.ScriptUploadStack, {
             instanceId: props.instanceId,
             scriptPath: props.scriptPath
