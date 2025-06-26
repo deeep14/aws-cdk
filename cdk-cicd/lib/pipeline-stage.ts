@@ -8,6 +8,7 @@ import { ImportBucketStack } from "./imports3stack";
 import { S3EventTriggerStack } from "./addS3Trigger";
 import { GlueJobStack } from "./glue-job";
 import { GlueNetworkConnectionStack } from "./glue-network-connection";
+import * as cdk from 'aws-cdk-lib'
 
 interface PipelineStageStackProps extends StackProps {
     LambdaStackName: string;
@@ -58,7 +59,9 @@ export class PipelineStage extends Stage{
             existingBucketArn: importedBucketInstance.importedBucket.bucketArn,
             lambdaFunction: lambdaInstace.test_lambda
         })
-        new GlueJobStack(this, "GlueJobStack", {})
-        new GlueNetworkConnectionStack(this, "glueConOp", {})
+        const glueConStack = new GlueNetworkConnectionStack(this, "glueConOp", {});
+        const glueJobStack = new GlueJobStack(this, "GlueJobStack", {});
+        glueJobStack.addDependency(glueConStack);
+
     }
 }
