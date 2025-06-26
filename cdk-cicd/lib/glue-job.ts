@@ -21,6 +21,13 @@ export class GlueJobStack extends Stack {
       ],
     });
 
+    glueRole.addToPolicy(new iam.PolicyStatement({
+        actions: [
+            "s3:PutObject",
+            "s3:GetObject",
+        ]
+    }))
+
     // (Optional) Add additional permissions to access S3 or other services
     glueRole.addToPolicy(new iam.PolicyStatement({
       actions: ['s3:*'],
