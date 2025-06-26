@@ -19,6 +19,7 @@ interface pipelineProps extends cdk.StackProps{
   lambdaTriggerStack: string;
   lambdaName: string;
   pipelineName: string;
+  stack_suffix: string;
 }
 
 export class CdkCicdStack extends cdk.Stack {
@@ -38,7 +39,7 @@ export class CdkCicdStack extends cdk.Stack {
         primaryOutputDirectory: 'cdk-cicd/cdk.out'
       })
     })
-    pipeline.addStage(new PipelineStage(this, 'TestStage', {
+    pipeline.addStage(new PipelineStage(this, `TestStage${props.stack_suffix}`, {
       LambdaStackName: props.LambdaStackName,
       LambdaStackStageName: props.LambdaStackStageName,
       EC2stackName: props.EC2stackName,
