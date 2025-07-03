@@ -21,7 +21,7 @@ export class GlueNetworkConnectionStack extends Stack {
         connectionType: 'NETWORK',
         physicalConnectionRequirements: {
           availabilityZone: "use2-az2",
-          subnetId: "s",
+          subnetId: "subnet-0b114bbc94005ee53",
           securityGroupIdList: ["sg-032f22cf6b66da3c3"]
         },
       },
