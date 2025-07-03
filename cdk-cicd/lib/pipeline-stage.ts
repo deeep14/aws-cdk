@@ -43,10 +43,10 @@ export class PipelineStage extends Stage{
         //     env: props.env,
         //     vpcId: props.vpcId
         // })
-        new ScriptUploadStack(this, props.ScriptUploadStack, {
-            instanceId: props.instanceId,
-            scriptPath: props.scriptPath
-        })
+        // new ScriptUploadStack(this, props.ScriptUploadStack, {
+        //     instanceId: props.instanceId,
+        //     scriptPath: props.scriptPath
+        // })
         new UploadToS3Stack(this, props.UploadToS3Stack, {
             BucketLogicalId: props.BucketLogicalId,
             BucketName: props.BucketName
