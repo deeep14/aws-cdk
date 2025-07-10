@@ -17,6 +17,8 @@ interface pipelineProps extends cdk.StackProps{
   importBucketStack: string;
   bucketArn: string;
   lambdaTriggerStack: string;
+  S3ToSqsStack: string;
+  SqsToLambdaStack: string;
 }
 
 export class CdkCicdStack extends cdk.Stack {
@@ -54,6 +56,8 @@ export class CdkCicdStack extends cdk.Stack {
       importBucketStack: props.importBucketStack,
       bucketArn: props.bucketArn,
       lambdaTriggerStack: props.lambdaTriggerStack,
+      SqsToLambdaStack: props.SqsToLambdaStack,
+      S3ToSqsStack: props.S3ToSqsStack
     }))
   }
 }

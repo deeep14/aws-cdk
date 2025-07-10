@@ -6,6 +6,8 @@ import { ScriptUploadStack } from "./upload-script-to-ec2";
 import { UploadToS3Stack } from "./upload-files-to-s3";
 import { ImportBucketStack } from "./imports3stack";
 import { LambdaTriggerStack } from "./addS3Trigger";
+import { S3ToSqsStack } from "./s3-to-sqs-stack";
+import { SqsToLambdaStack } from "./sqs-to-lambda-stack";
 
 interface PipelineStageStackProps extends StackProps {
     LambdaStackName: string;
@@ -20,16 +22,18 @@ interface PipelineStageStackProps extends StackProps {
 
     UploadToS3Stack: string;
     BucketLogicalId: string;
-    BucketName:string;
+    BucketName: string;
 
     importBucketStack: string;
     bucketArn: string;
 
     lambdaTriggerStack: string;
+    S3ToSqsStack: string;
+    SqsToLambdaStack: string;
 }
 
-export class PipelineStage extends Stage{
-    constructor(scope: Construct, id: string, props: PipelineStageStackProps){
+export class PipelineStage extends Stage {
+    constructor(scope: Construct, id: string, props: PipelineStageStackProps) {
         super(scope, id, props);
         const lambdaInstace = new LambdaStack(this, props.LambdaStackName, {
             stageName: props.LambdaStackStageName
@@ -50,9 +54,12 @@ export class PipelineStage extends Stage{
             bucketArn: props.bucketArn,
             importBucketStack: props.importBucketStack
         })
-        new LambdaTriggerStack(this, props.lambdaTriggerStack, {
-            bucket: importedBucketInstance.importedBucket,
-            lambdaFunc: lambdaInstace.test_lambda
+        const s3ToSqsQueue = new S3ToSqsStack(this, props.S3ToSqsStack, {
+            bucket: importedBucketInstance.importedBucket
+        })
+        new SqsToLambdaStack(this, props.SqsToLambdaStack, {
+            queue: s3ToSqsQueue.queue,
+            lambdaFunction: lambdaInstace.test_lambda
         })
     }
 }
