@@ -17,6 +17,9 @@ interface pipelineProps extends cdk.StackProps{
   importBucketStack: string;
   bucketArn: string;
   lambdaTriggerStack: string;
+  lambdaName: string;
+  pipelineName: string;
+  stack_suffix: string;
   S3ToSqsStack: string;
   SqsToLambdaStack: string;
 }
@@ -25,7 +28,7 @@ export class CdkCicdStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: pipelineProps) {
     super(scope, id, props);
     const pipeline = new CodePipeline(this, 'myCodePipelineAwsCdk', {
-      pipelineName: 'cdk-code-pipeline',
+      pipelineName: props.pipelineName,
       synth: new ShellStep('myShellStep', {
         input: CodePipelineSource.gitHub('deeep14/aws-cdk', 'cdk-cicd'),
         commands: [
@@ -38,7 +41,7 @@ export class CdkCicdStack extends cdk.Stack {
         primaryOutputDirectory: 'cdk-cicd/cdk.out'
       })
     })
-    pipeline.addStage(new PipelineStage(this, 'TestStage', {
+    pipeline.addStage(new PipelineStage(this, `TestStage${props.stack_suffix}`, {
       LambdaStackName: props.LambdaStackName,
       LambdaStackStageName: props.LambdaStackStageName,
       EC2stackName: props.EC2stackName,
@@ -56,6 +59,7 @@ export class CdkCicdStack extends cdk.Stack {
       importBucketStack: props.importBucketStack,
       bucketArn: props.bucketArn,
       lambdaTriggerStack: props.lambdaTriggerStack,
+      lambdaName: props.lambdaName,
       SqsToLambdaStack: props.SqsToLambdaStack,
       S3ToSqsStack: props.S3ToSqsStack
     }))

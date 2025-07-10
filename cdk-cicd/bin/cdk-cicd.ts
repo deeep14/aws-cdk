@@ -4,13 +4,14 @@ import { CdkCicdStack } from '../lib/cdk-cicd-stack';
 
 const app = new cdk.App();
 new CdkCicdStack(app, 'CdkCicdStack', {
+  pipelineName: 'cdk-code-pipeline',
   LambdaStackName: 'myLambdaStack',
   LambdaStackStageName: 'dev',
   EC2stackName: 'myEc2Stack',
   vpcId: 'vpc-033a8a5e822d62f3f',
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
-    region: process.env.CDK_DEFAULT_REGION
+    region: "us-east-2"
   },
   instanceId: 'i-07478e9518641587d',
   ScriptUploadStack: 'ScriptUploadStack',
@@ -22,5 +23,7 @@ new CdkCicdStack(app, 'CdkCicdStack', {
   bucketArn: 'arn:aws:s3:::test-trigger-bucket0303',
   lambdaTriggerStack: 'myLambdaAndS3TriggerStack',
   SqsToLambdaStack: 'SqsToLambdaStack',
-  S3ToSqsStack: 'S3ToSqsStack'
+  S3ToSqsStack: 'S3ToSqsStack',
+  lambdaName: 'cdk-test-lambda',
+  stack_suffix: ''
 });

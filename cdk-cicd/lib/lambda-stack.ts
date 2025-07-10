@@ -5,16 +5,17 @@ import * as lambda from "aws-cdk-lib/aws-lambda";
 
 interface LambdaStackProps extends StackProps {
     stageName: string;
+    lambdaName: string;
 }
 
 export class LambdaStack extends Stack{
     public readonly test_lambda;
-    constructor(scope: Construct, id: string, props?: LambdaStackProps){
+    constructor(scope: Construct, id: string, props: LambdaStackProps){
         super(scope, id, props);
         
         this.test_lambda = new lambda.Function(this, 'myLambdaFunction101', {
             handler: 'test_function.handler',
-            functionName: 'cdk-test-lambda',
+            functionName: props.lambdaName,
             runtime: lambda.Runtime.PYTHON_3_9,
             code: lambda.Code.fromAsset('src/lambda'),
         });

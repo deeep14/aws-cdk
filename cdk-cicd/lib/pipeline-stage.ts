@@ -5,13 +5,17 @@ import { Ec2InstanceCdkStack } from "./ec2-stack";
 import { ScriptUploadStack } from "./upload-script-to-ec2";
 import { UploadToS3Stack } from "./upload-files-to-s3";
 import { ImportBucketStack } from "./imports3stack";
-import { LambdaTriggerStack } from "./addS3Trigger";
+import { S3EventTriggerStack } from "./addS3Trigger";
+import { GlueJobStack } from "./glue-job";
+import { GlueNetworkConnectionStack } from "./glue-network-connection";
+import * as cdk from 'aws-cdk-lib'
 import { S3ToSqsStack } from "./s3-to-sqs-stack";
 import { SqsToLambdaStack } from "./sqs-to-lambda-stack";
 
 interface PipelineStageStackProps extends StackProps {
     LambdaStackName: string;
     LambdaStackStageName: string;
+    lambdaName: string;
 
     EC2stackName: string;
     vpcId: string;
@@ -36,16 +40,17 @@ export class PipelineStage extends Stage {
     constructor(scope: Construct, id: string, props: PipelineStageStackProps) {
         super(scope, id, props);
         const lambdaInstace = new LambdaStack(this, props.LambdaStackName, {
-            stageName: props.LambdaStackStageName
+            stageName: props.LambdaStackStageName,
+            lambdaName: props.lambdaName
         })
-        new Ec2InstanceCdkStack(this, props.EC2stackName, {
-            env: props.env,
-            vpcId: props.vpcId
-        })
-        new ScriptUploadStack(this, props.ScriptUploadStack, {
-            instanceId: props.instanceId,
-            scriptPath: props.scriptPath
-        })
+        // new Ec2InstanceCdkStack(this, props.EC2stackName, {
+        //     env: props.env,
+        //     vpcId: props.vpcId
+        // })
+        // new ScriptUploadStack(this, props.ScriptUploadStack, {
+        //     instanceId: props.instanceId,
+        //     scriptPath: props.scriptPath
+        // })
         new UploadToS3Stack(this, props.UploadToS3Stack, {
             BucketLogicalId: props.BucketLogicalId,
             BucketName: props.BucketName
@@ -61,5 +66,9 @@ export class PipelineStage extends Stage {
             queue: s3ToSqsQueue.queue,
             lambdaFunction: lambdaInstace.test_lambda
         })
+        const glueConStack = new GlueNetworkConnectionStack(this, "glueConOp", {});
+        const glueJobStack = new GlueJobStack(this, "GlueJobStack", {});
+        glueJobStack.addDependency(glueConStack);
+
     }
 }
