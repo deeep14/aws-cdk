@@ -15,6 +15,7 @@ export class S3ToSqsStack extends Stack {
     super(scope, id, props);
 
     this.queue = new sqs.Queue(this, 'MyQueue', {
+      queueName: "s3-to-sqs-q",
       visibilityTimeout: Duration.seconds(30),
     });
 
