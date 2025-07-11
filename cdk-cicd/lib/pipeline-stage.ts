@@ -43,18 +43,6 @@ export class PipelineStage extends Stage {
             stageName: props.LambdaStackStageName,
             lambdaName: props.lambdaName
         })
-        // new Ec2InstanceCdkStack(this, props.EC2stackName, {
-        //     env: props.env,
-        //     vpcId: props.vpcId
-        // })
-        // new ScriptUploadStack(this, props.ScriptUploadStack, {
-        //     instanceId: props.instanceId,
-        //     scriptPath: props.scriptPath
-        // })
-        new UploadToS3Stack(this, props.UploadToS3Stack, {
-            BucketLogicalId: props.BucketLogicalId,
-            BucketName: props.BucketName
-        })
         const importedBucketInstance = new ImportBucketStack(this, props.importBucketStack, {
             bucketArn: props.bucketArn,
             importBucketStack: props.importBucketStack
@@ -62,13 +50,9 @@ export class PipelineStage extends Stage {
         const s3ToSqsQueue = new S3ToSqsStack(this, props.S3ToSqsStack, {
             bucket: importedBucketInstance.importedBucket
         })
-        new SqsToLambdaStack(this, props.SqsToLambdaStack, {
+        const SqsToLambda = new SqsToLambdaStack(this, props.SqsToLambdaStack, {
             queue: s3ToSqsQueue.queue,
             lambdaFunction: lambdaInstace.test_lambda
         })
-        const glueConStack = new GlueNetworkConnectionStack(this, "glueConOp", {});
-        const glueJobStack = new GlueJobStack(this, "GlueJobStack", {});
-        glueJobStack.addDependency(glueConStack);
-
     }
 }
