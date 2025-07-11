@@ -50,9 +50,12 @@ export class PipelineStage extends Stage {
         const s3ToSqsQueue = new S3ToSqsStack(this, props.S3ToSqsStack, {
             bucket: importedBucketInstance.importedBucket
         })
+        s3ToSqsQueue.addDependency(importedBucketInstance);
         const SqsToLambda = new SqsToLambdaStack(this, props.SqsToLambdaStack, {
             queue: s3ToSqsQueue.queue,
             lambdaFunction: lambdaInstace.test_lambda
         })
+        SqsToLambda.addDependency(lambdaInstace);
+        SqsToLambda.addDependency(s3ToSqsQueue);
     }
 }
